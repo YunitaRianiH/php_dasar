@@ -48,6 +48,8 @@ while ($row = $result->fetch_assoc()) {
                     <td>
                         <!-- Tombol Edit -->
                         <a href="edit_mahasiswa.php?nim=<?= $row['nim']; ?>" class="btn btn-warning">Edit</a>
+                        <!-- Tombol Hapus -->
+                        <a href="hapus_mahasiswa.php?nim=<?= $row['nim']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this student?')">Hapus</a>
                     </td>
                 </tr>
             <?php } ?>
