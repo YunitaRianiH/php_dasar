@@ -33,6 +33,7 @@ while ($row = $result->fetch_assoc()) {
        </div>
        <?php } ?>
     <a href="tambah_mahasiswa.php" class="btn btn-primary">Tambah Mahasiswa</a>
+    <a href="logout.php" class="btn btn-warning">Logout</a> 
     <div class="mb-10">  
         <br>  
         <table class="table table-bordered table-hover">
