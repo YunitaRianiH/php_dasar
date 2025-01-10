@@ -1,5 +1,5 @@
 <?php
-
+ session_start();
 $mysqli = new mysqli('localhost', 'root', '', 'list_mahasiswa');
 
 $study_programs = $mysqli->query("SELECT * FROM study_programs");
@@ -12,9 +12,15 @@ if (isset($_POST['nim']) && isset($_POST['nama'])) {
     $insert = $mysqli->query("INSERT INTO students (nim, nama, study_programs_id) 
                                 VALUES('$nim', '$nama', $study_programs)");
     if ($insert) {
+        // Menyimpan pesan sukses ke dalam session
+        $_SESSION['success'] = true;
+       // Menyimpan pesan error ke dalam session jika query gagal
+        $_SESSION['message'] = "Data Berhasil Ditambahkan";
         header("Location: mahasiswa.php");
         exit();
     }
+   
+
 }
 
 ?>

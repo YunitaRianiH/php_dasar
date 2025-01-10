@@ -1,38 +1,35 @@
 <?php 
-
+session_start();
 $mysqli = new mysqli('localhost', 'root', '', 'list_mahasiswa');
 
 $study_programs = $mysqli->query("SELECT * FROM study_programs");
 
-// Jika ada parameter NIM di URL (untuk edit data mahasiswa)
 if (isset($_GET['nim'])) {
     $nim = $_GET['nim'];
-    // Ambil data mahasiswa berdasarkan NIM
+   
     $result = $mysqli->query("SELECT * FROM students WHERE nim = '$nim'");
     $student = $result->fetch_assoc();
 }
 
-// Proses submit form untuk tambah atau update data mahasiswa
 if (isset($_POST['nim']) && isset($_POST['nama'])) {
     $nim = $_POST['nim'];
     $nama = $_POST['nama'];
     $study_programs = $_POST['program_studi'];
 
-    if (isset($student)) { // Jika student sudah ada, lakukan update
+    if (isset($student)) { 
         $update = $mysqli->query("UPDATE students 
                                   SET nama = '$nama', study_programs_id = $study_programs 
                                   WHERE nim = '$nim'");
         if ($update) {
+        // Menyimpan pesan sukses ke dalam session
+        $_SESSION['success'] = true;
+        // Menyimpan pesan error ke dalam session jika query gagal
+         $_SESSION['message'] = "Data Berhasil Diubah";
             header("Location: mahasiswa.php");
             exit();
         }
-    } else { // Jika tidak ada student, maka lakukan insert (tambah data)
-        $insert = $mysqli->query("INSERT INTO students (nim, nama, study_programs_id) 
-                                  VALUES('$nim', '$nama', $study_programs)");
-        if ($insert) {
-            header("Location: mahasiswa.php");
-            exit();
-        }
+  
+        
     }
 }
 
